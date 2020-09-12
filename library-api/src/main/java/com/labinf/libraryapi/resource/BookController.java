@@ -49,4 +49,10 @@ public class BookController {
         return new ApiErrors(ex);
 
     }
+
+    @GetMapping("{id}")
+    public BookDTO get(@PathVariable Long id){
+        Book book = service.getById(id).get();
+        return modelMapper.map(book, BookDTO.class);
+    }
 }
