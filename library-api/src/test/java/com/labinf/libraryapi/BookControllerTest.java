@@ -93,7 +93,7 @@ public class BookControllerTest {
 
         BookDTO dto = createBook();
         String json =  new ObjectMapper(). writeValueAsString(dto);
-        String mensagemErro = "Isbn já cadastrado";
+        String mensagemErro = "Isbn já cadastrado.";
 
         BDDMockito.given(service.save(Mockito.any(Book.class))).willThrow(new BusinessException(mensagemErro));
 
@@ -108,6 +108,8 @@ public class BookControllerTest {
                 .andExpect(jsonPath("errors[0]").value((mensagemErro)));
 
     }
+
+
 
 
     private BookDTO createBook() {
