@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import javax.swing.*;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -139,6 +140,22 @@ public class BookControllerTest {
 
     }
 
+    @Test
+    @DisplayName("Deve retornar resource not found quando o livro nao existir")
+    public void bookNotFoundTest() throws Exception {
+        //cenario
+        BDDMockito.given(service.getById(Mockito.anyLong())).willReturn(Optional.empty());
+
+        //execução
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .get(BOOK_API.concat("/" + 1))
+                .accept(MediaType.APPLICATION_JSON);
+
+        //verificação
+        mvc
+            .perform(request)
+            .andExpect(status().isNotFound());
+    }
 
     private BookDTO createBook() {
         return BookDTO.builder().author("Diego").title("TDD").isbn("001").build();
