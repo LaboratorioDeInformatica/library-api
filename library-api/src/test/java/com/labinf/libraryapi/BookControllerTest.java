@@ -157,6 +157,33 @@ public class BookControllerTest {
             .andExpect(status().isNotFound());
     }
 
+    @Test
+    @DisplayName("Deve deletar um livro")
+    public void deleteBookTest() throws Exception {
+        //cenario
+        BDDMockito.given(service.getById(Mockito.anyLong())).willReturn(Optional.of(Book.builder().id(1L).build()));
+
+        //execução
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .delete(BOOK_API.concat("/" + 1));
+
+        //verificação
+        mvc.perform(request)
+                .andExpect(status().isNoContent());
+    }
+    @Test
+    @DisplayName("Deve retornar Not Found para livros nao encontrados")
+    public void deleteBookNotFound() throws Exception {
+        BDDMockito.given(service.getById(Mockito.anyLong())).willReturn(Optional.empty());
+
+        //execução
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .delete(BOOK_API.concat("/" + 1));
+
+        mvc.perform(request)
+                .andExpect(status().isNotFound());
+    }
+
     private BookDTO createBook() {
         return BookDTO.builder().author("Diego").title("TDD").isbn("001").build();
     }
