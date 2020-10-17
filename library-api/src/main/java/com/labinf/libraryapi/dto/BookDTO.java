@@ -1,6 +1,7 @@
 package com.labinf.libraryapi.dto;
 import lombok.*;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 
 
@@ -14,8 +15,10 @@ public class BookDTO {
 
     @NotEmpty
     private String title;
+
     @NotEmpty
     private String author;
+
     @NotEmpty
     private String isbn;
 
