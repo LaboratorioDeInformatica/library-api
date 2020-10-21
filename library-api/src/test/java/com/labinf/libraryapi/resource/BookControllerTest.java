@@ -1,10 +1,11 @@
-package com.labinf.libraryapi;
+package com.labinf.libraryapi.resource;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.labinf.libraryapi.dto.BookDTO;
 import com.labinf.libraryapi.exceptions.BusinessException;
 import com.labinf.libraryapi.model.entity.Book;
+import com.labinf.libraryapi.resource.BookController;
 import com.labinf.libraryapi.service.BookService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
@@ -37,7 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
-@WebMvcTest
+@WebMvcTest(controllers = BookController.class)
 @AutoConfigureMockMvc
 public class BookControllerTest {
 
