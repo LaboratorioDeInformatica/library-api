@@ -14,6 +14,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -81,5 +82,55 @@ public class LoanServiceTest {
         //verificação
         assertThat(exception).isInstanceOf(BusinessException.class).hasMessage("Book already loaned");
         verify(repository,never()).save(savingLoan);
+    }
+
+    @Test
+    @DisplayName("Deve obter as informações de um emprestimo pelo ID")
+    public void getLoanDetailTest(){
+        //cenario
+        Long id = 1L;
+        Loan loan = createLoan();
+        loan.setId(id);
+
+        Mockito.when(repository.findById(id)).thenReturn(Optional.of(loan));
+
+        //execução
+        Optional<Loan> result = service.getById(id);
+
+        //verificação
+        assertThat(result.isPresent()).isTrue();
+        assertThat(result.get().getId()).isEqualTo(id);
+        assertThat(result.get().getCustomer()).isEqualTo(loan.getCustomer());
+        assertThat(result.get().getBook()).isEqualTo(loan.getBook());
+        assertThat(result.get().getLoanDate()).isEqualTo(loan.getLoanDate());
+
+        verify(repository).findById(id);
+    }
+
+    @Test
+    @DisplayName("Deve atualizar um empréstimo")
+    public void updateLoanTest(){
+        //cenario
+        Long id = 1L;
+        Loan loan = createLoan();
+        loan.setId(id);
+        loan.setReturned(true);
+
+        when(repository.save(loan)).thenReturn(loan);
+
+        Loan updatedLoan = service.update(loan);
+
+        assertThat(updatedLoan.getReturned()).isTrue();
+        verify(repository).save(loan);
+
+    }
+
+    private Loan createLoan(){
+        Book book = Book.builder().id(1L).build();
+        String customer = "Fulano";
+        return  Loan.builder().book(book)
+                .customer(customer)
+                .loanDate(LocalDate.now())
+                .build();
     }
 }
