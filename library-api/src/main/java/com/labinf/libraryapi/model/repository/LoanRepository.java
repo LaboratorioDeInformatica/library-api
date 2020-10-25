@@ -11,9 +11,10 @@ import org.springframework.data.repository.query.Param;
 
 public interface LoanRepository extends JpaRepository<Loan, Long> {
 
-    @Query("SELECT case WHEN ( count (l.id) > 0 ) then true else  false end from Loan l " +
+    @Query(value="SELECT case WHEN ( count (l.id) > 0 ) then true else  false end from Loan l " +
             " where l.book =:book  and ( l.returned is null or l.returned is not true ) "  )
     boolean existsByBookAndNotReturned(@Param("book") Book book);
 
-    Page<Loan> findByBookIsbnOrCustomer(String isbn, String customer, Pageable page);
+    @Query(value="SELECT l FROM Loan as l JOIN l.book as b WHERE b.isbn= :isbn OR l.customer= :customer")
+    Page<Loan> findByBookIsbnOrCustomer(@Param("isbn") String isbn, @Param("customer") String customer, Pageable page);
 }
