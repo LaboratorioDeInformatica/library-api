@@ -33,7 +33,7 @@ public class LoanServiceTest {
     @Test
     @DisplayName("Deve salvar um emprestimo")
     public void saveLoanTest(){
-
+        //cenario
         Book book = Book.builder().id(1L).build();
         String customer = "Fulano";
         Loan savingLoan = Loan.builder().book(book)
@@ -47,11 +47,12 @@ public class LoanServiceTest {
                 .loanDate(LocalDate.now())
                 .build();
 
-
         when(repository.save(savingLoan)).thenReturn(savedLoan);
 
+        //execução
         Loan loan = service.save(savingLoan);
 
+        //verificação
         assertThat(loan.getId()).isEqualTo(savedLoan.getId());
         assertThat(loan.getBook().getId()).isEqualTo(savedLoan.getBook().getId());
         assertThat(loan.getCustomer()).isEqualTo(savedLoan.getCustomer());
