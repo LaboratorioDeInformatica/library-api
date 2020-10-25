@@ -1,18 +1,15 @@
-package com.labinf.libraryapi.api.dto;
+package com.labinf.libraryapi.dto;
 
-import com.labinf.libraryapi.dto.BookDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @Builder
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
-public class LoanDTO {
-    private Long id;
+@NoArgsConstructor
+public class LoanFilterDTO {
     private String isbn;
     private String customer;
-    private BookDTO book;
 }
