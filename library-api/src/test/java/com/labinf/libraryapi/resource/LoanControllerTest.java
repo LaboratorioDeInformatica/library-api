@@ -2,6 +2,7 @@ package com.labinf.libraryapi.resource;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.labinf.libraryapi.api.dto.LoanDTO;
 import com.labinf.libraryapi.api.dto.LoanDto;
 import com.labinf.libraryapi.dto.LoanFilterDTO;
 import com.labinf.libraryapi.dto.ReturnedLoanDTO;
@@ -60,7 +61,7 @@ public class LoanControllerTest {
     @DisplayName("Deve realizar um emprestimo")
     public void createLoanTest() throws Exception {
 
-        LoanDto dto = LoanDto.builder().isbn("123").customer("Fulana").build();
+        LoanDTO dto = LoanDTO.builder().isbn("123").email("customer@email.com.br").customer("Fulana").build();
         String json = new ObjectMapper().writeValueAsString(dto);
         Book book = Book.builder().id(1L).isbn("123").build();
         BDDMockito.given(bookService.getBookByIsbn("123"))
