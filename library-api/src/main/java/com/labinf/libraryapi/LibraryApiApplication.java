@@ -16,14 +16,14 @@ import java.util.List;
 @EnableScheduling
 public class LibraryApiApplication {
 
-	@Autowired
-	private EmailService emailService;
+	/*@Autowired
+	private EmailService emailService;*/
 
 	@Bean
 	public ModelMapper modelMapper(){
 		return new ModelMapper();
 	}
-
+/*
 	@Bean
 	public CommandLineRunner runner(){
 
@@ -32,7 +32,7 @@ public class LibraryApiApplication {
 			emailService.sendMails("Testando serviços de emails.", emails);
 			System.out.println("Emails enviados");
 		};
-	}
+	}*/
 
 	public static void main(String[] args) {
 		SpringApplication.run(LibraryApiApplication.class, args);
